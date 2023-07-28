@@ -2,7 +2,7 @@
   <div class="note-form__wrapper">
     <form class="note-form" @submit.prevent="onSubmit">
       <textarea required v-model="value" placeholder="Type ur note" />
-      <TagsList @onItemClick="handleTagClick" :items="tags" />
+      <TagsList @onItemClick="handleTagClick" :items="tags" :tempArr="tempArr" />
       <button class="btn btnPrimary" type="submit">Add new note</button>
     </form>
   </div>
@@ -17,16 +17,39 @@ export default {
     return {
       value: "",
       tags: ["home", "work", "travel"],
+      checkedTags: [],
+      tempArr: [],
     };
   },
   methods: {
     onSubmit() {
-      this.$emit("onSubmit", this.value);
+      this.$emit("onSubmit", { title: this.value, arr: this.checkedTags });
       this.value = "";
+      this.checkedTags = [];
+      this.tempArr = [];
     },
 
-    handleTagClick(tag) {
-      console.log(tag);
+    handleTagClick(tag, i) {
+
+      if (this.checkedTags.length > 0) {
+        let isMatch = false;
+
+        this.checkedTags.forEach(el => {
+          if (tag === el) {
+            isMatch = true;
+          }
+        });
+
+        if (isMatch) {
+          this.checkedTags = this.checkedTags.filter(el => tag !== el);
+        } else {
+          this.checkedTags.push(tag);
+        }
+
+      } else {
+        this.checkedTags.push(tag);
+      }
+
     },
   },
 };

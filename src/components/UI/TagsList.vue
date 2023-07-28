@@ -2,12 +2,12 @@
   <div class="tags-list">
     <div
       class="tag-item"
-      v-for="item in items"
+      v-for="(item, i) in items"
       :key="item"
-      @click="$emit('onItemClick', item)"
-      :class="{ isPreview: isPreview }"
+      @click="onClick(item, i)"
+      :class="{ isPreview: isPreview, isActive: tempArr[i] }"
     >
-      <span>{{ item }}</span>
+      {{ item }} {{}}
     </div>
   </div>
 </template>
@@ -19,9 +19,19 @@ export default {
       type: Array,
       required: true,
     },
+    tempArr: {
+      type: Array,
+      // required: true,
+    },
     isPreview: {
       type: Boolean,
       default: false,
+    },
+  },
+  methods: {
+    onClick(item, i) {
+      this.$emit("onItemClick",item);
+      this.tempArr[i] = !this.tempArr[i];
     },
   },
 };
@@ -40,6 +50,10 @@ export default {
   border-radius: 22px;
   user-select: none;
   cursor: pointer;
+  &.isActive {
+    background-color: #444ce0;
+    color: #fff;
+  }
   &.isPreview {
     padding: 0;
     color: #444ce0;

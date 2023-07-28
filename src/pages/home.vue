@@ -43,13 +43,12 @@ export default {
       }
     },
     // * submit note
-    handleSubmit(title) {
+    handleSubmit({title, arr}) {
       const note = {
         title: title,
-        tags: [],
+        tags: arr,
       };
       this.notes.push(note);
-      console.log(note);
     },
     // * remove note
     handleRemove(index) {

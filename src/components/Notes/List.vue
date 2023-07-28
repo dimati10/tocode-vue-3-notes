@@ -12,6 +12,7 @@
           isPreview
           v-if="note.tags && note.tags.length > 0"
           :items="note.tags"
+          :tempArr="tempArr"
         />
       </div>
     </div>
@@ -28,6 +29,11 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  data() {
+    return {
+      tempArr: [],
+    };
   },
 };
 </script>
